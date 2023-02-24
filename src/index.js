@@ -1,3 +1,9 @@
+import { StrictMode, useEffect } from 'react';
+import { createRoot } from 'react-dom/client';
+import { legacy_createStore, combineReducers } from 'redux';
+import { Provider, connect } from 'react-redux';
+import './index.scss';
+
 //REDUX STATE LOGIC
 const INITIAL_POWER_STATUS = "on";
 const TOGGLE_POWER = "toggle_power"
@@ -165,13 +171,13 @@ const audioBindingReducer = (state = INITIAL_AUDIO_BINDINGS, action) => {
   }
 }
 
-const rootReducer = Redux.combineReducers({
+const rootReducer = combineReducers({
   powerStatus: powerStatusReducer,
   displayText: displayTextReducer,
   volume: volumeReducer,
   audioBindings: audioBindingReducer,
 });
-const store = Redux.createStore(rootReducer);
+const store = legacy_createStore(rootReducer);
 
 
 
@@ -191,7 +197,6 @@ const PowerBtn = props => {
       <i class={`fa fa-power-off`}></i>
     </button>
   );
-  x
 }
 const MachineSettings = props => {
   const initialVolumeStep = 5;
@@ -214,7 +219,7 @@ const MachineSettings = props => {
 
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     let volumeSetting = document.getElementById("volume-setting");
     volumeSetting.value = props.maxVolume * volumeSteps * initialVolumeStep;
     props.changeVolume("current", document.getElementById("volume-setting").value / 100);
@@ -294,17 +299,17 @@ const DrumPadBtns = props => {
 
 
 
-  React.useEffect(() => {
+  useEffect(() => {
 
     window.addEventListener("keydown", handleKeyPress);
 
     return () => {
-      removeEventListener("keydown", handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     }
 
   }, [props.powerStatus]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const btns = document.getElementsByClassName("drum-pad");
 
     if (props.powerStatus === "off")
@@ -316,7 +321,7 @@ const DrumPadBtns = props => {
 
   }, [props.powerStatus]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const btns = document.getElementsByTagName("audio");
 
     for (let i = 0; i < btns.length; i++)
@@ -420,21 +425,21 @@ const mapDispatchToProps = (dispatch) => {
     },
   }
 };
-const Container = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(App);
+const Container = connect(mapStateToProps, mapDispatchToProps)(App);
 
 
 
 //PAGE SETUP
 const AppWrapper = props => {
   return (
-    <React.StrictMode>
-      <ReactRedux.Provider store={store}>
+    <StrictMode>
+      <Provider store={store}>
         <Container />
-      </ReactRedux.Provider>
-    </React.StrictMode>
+      </Provider>
+    </StrictMode>
   );
 }
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = createRoot(document.getElementById("root"));
 
 
 
