@@ -1,19 +1,21 @@
-const INITIAL_DISPLAY_TEXT = "";
-const CHANGE_DISPLAY_TEXT = "change_display_text";
-const changeDisplayText = (newText) => {
-  return {
-    type: CHANGE_DISPLAY_TEXT,
-    payload: newText
-  }
-};
-const displayTextReducer = (state = INITIAL_DISPLAY_TEXT, action) => {
-  switch (action.type) {
-    case CHANGE_DISPLAY_TEXT:
-      return action.payload;
-    default:
-      return state;
-  }
-}
+import { createSlice } from "@reduxjs/toolkit";
 
-export { changeDisplayText };
-export default displayTextReducer;
+
+
+const INITIAL_DISPLAY_TEXT = "";
+const displaySlice = createSlice({
+  name: 'displayText',
+  initialState: {
+    value: INITIAL_DISPLAY_TEXT
+  },
+  reducers: {
+    changeDisplayText: (state, action) => {
+      state.value = action.payload;
+    }
+  }
+});
+
+
+
+export const { changeDisplayText } = displaySlice.actions;
+export default displaySlice.reducer;

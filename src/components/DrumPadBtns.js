@@ -1,6 +1,13 @@
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { changeDisplayText } from "../app/slices/displaySlice";
 
 const DrumPadBtns = props => {
+  const powerStatus = useSelector((state) => state.powerStatus.value);
+  const currentVolume = useSelector((state) => state.volume.value.currentVolume);
+  const audioBindings = useSelector((state) => state.audioBindings.value);
+  const dispatch = useDispatch();
+
 
   function playAudio(btnKey) {
 
@@ -13,39 +20,39 @@ const DrumPadBtns = props => {
   }
   function setDisplay(btnKey) {
     switch (btnKey) {
-      case props.audioBindings[0][0]:
-        props.changeDisplayText(props.audioBindings[0][2]);
+      case audioBindings[0][0]:
+        dispatch(changeDisplayText(audioBindings[0][2]));
         break;
-      case props.audioBindings[1][0]:
-        props.changeDisplayText(props.audioBindings[1][2]);
+      case audioBindings[1][0]:
+        dispatch(changeDisplayText(audioBindings[1][2]));
         break;
-      case props.audioBindings[2][0]:
-        props.changeDisplayText(props.audioBindings[2][2]);
+      case audioBindings[2][0]:
+        dispatch(changeDisplayText(audioBindings[2][2]));
         break;
-      case props.audioBindings[3][0]:
-        props.changeDisplayText(props.audioBindings[3][2]);
+      case audioBindings[3][0]:
+        dispatch(changeDisplayText(audioBindings[3][2]));
         break;
-      case props.audioBindings[4][0]:
-        props.changeDisplayText(props.audioBindings[4][2]);
+      case audioBindings[4][0]:
+        dispatch(changeDisplayText(audioBindings[4][2]));
         break;
-      case props.audioBindings[5][0]:
-        props.changeDisplayText(props.audioBindings[5][2]);
+      case audioBindings[5][0]:
+        dispatch(changeDisplayText(audioBindings[5][2]));
         break;
-      case props.audioBindings[6][0]:
-        props.changeDisplayText(props.audioBindings[6][2]);
+      case audioBindings[6][0]:
+        dispatch(changeDisplayText(audioBindings[6][2]));
         break;
-      case props.audioBindings[7][0]:
-        props.changeDisplayText(props.audioBindings[7][2]);
+      case audioBindings[7][0]:
+        dispatch(changeDisplayText(audioBindings[7][2]));
         break;
-      case props.audioBindings[8][0]:
-        props.changeDisplayText(props.audioBindings[8][2]);
+      case audioBindings[8][0]:
+        dispatch(changeDisplayText(audioBindings[8][2]));
         break;
 
     }
 
   }
   function handleClick(btnKey) {
-    if (props.powerStatus === "on") {
+    if (powerStatus === "on") {
       playAudio(btnKey);
       setDisplay(btnKey);
     }
@@ -53,7 +60,7 @@ const DrumPadBtns = props => {
   function handleKeyPress(event) {
     const btnKey = event.key.toUpperCase();
 
-    if (props.audioBindings.some(audioBinding => btnKey === audioBinding[0])) {
+    if (audioBindings.some(audioBinding => btnKey === audioBinding[0])) {
       handleClick(btnKey);
     }
   }
@@ -68,40 +75,40 @@ const DrumPadBtns = props => {
       window.removeEventListener("keydown", handleKeyPress);
     }
 
-  }, [props.powerStatus]);
+  }, [powerStatus]);
 
   useEffect(() => {
     const btns = document.getElementsByClassName("drum-pad");
 
-    if (props.powerStatus === "off")
+    if (powerStatus === "off")
       for (let i = 0; i < btns.length; i++)
         btns[i].className = "drum-pad " + "btn-off";
     else
       for (let i = 0; i < btns.length; i++)
         btns[i].className = "drum-pad " + "btn-on-idle";
 
-  }, [props.powerStatus]);
+  }, [powerStatus]);
 
   useEffect(() => {
     const btns = document.getElementsByTagName("audio");
 
     for (let i = 0; i < btns.length; i++)
-      btns[i].volume = props.currentVolume;
-  }, [props.currentVolume]);
+      btns[i].volume = currentVolume;
+  }, [currentVolume]);
 
 
 
   return (
     <div id="drum-pad-btns">
 
-      {props.audioBindings.map((audioBinding) => {
+      {audioBindings.map((audioBinding) => {
 
         const [btnKey, audioSrc] = audioBinding;
 
         return (
           <button
             id={btnKey + "-btn"}
-            class={`drum-pad btn-${props.powerStatus}-idle`}
+            class={`drum-pad btn-${powerStatus}-idle`}
             key={btnKey + "-btn"}
             onClick={() => {
               handleClick(btnKey);

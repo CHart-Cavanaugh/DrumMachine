@@ -1,10 +1,18 @@
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { changeVolume } from '../app/slices/volumeSlice';
 
 const MachineSettings = props => {
+  const MIN_VOLUME = useSelector((state) => state.volume.value.minVolume);
+  const MAX_VOLUME = useSelector((state) => state.volume.value.maxVolume);
+  const dispatch = useDispatch();
   const initialVolumeStep = 5;
   const volumeSteps = 10;
   const handleChange = (event) => {
-    props.changeVolume("current", event.target.value / 100);
+    dispatch(changeVolume({
+      volType: "current",
+      newVolume: event.target.value / 100
+    }));
   }
   const volumeSetting = (
     <label for="volume-setting">
@@ -12,10 +20,10 @@ const MachineSettings = props => {
       <input
         id="volume-setting"
         type="range"
-        min={props.minVolume * 100}
-        max={props.maxVolume * 100}
+        min={MIN_VOLUME * 100}
+        max={MAX_VOLUME * 100}
         onChange={handleChange}
-        step={props.maxVolume * volumeSteps}
+        step={MAX_VOLUME * volumeSteps}
       />
     </label>
 
@@ -23,8 +31,11 @@ const MachineSettings = props => {
 
   useEffect(() => {
     let volumeSetting = document.getElementById("volume-setting");
-    volumeSetting.value = props.maxVolume * volumeSteps * initialVolumeStep;
-    props.changeVolume("current", document.getElementById("volume-setting").value / 100);
+    volumeSetting.value = MAX_VOLUME * volumeSteps * initialVolumeStep;
+    dispatch(changeVolume({
+      volType: "current",
+      newVolume: document.getElementById("volume-setting").value / 100
+    }));
   }, []);
 
   return (

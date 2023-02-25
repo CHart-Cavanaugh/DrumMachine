@@ -1,3 +1,7 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+
+
 const MACHINE_BTN_KEYBINDS = [
   "Q", "W", "E",
   "A", "S", "D",
@@ -32,27 +36,20 @@ const INITIAL_AUDIO_BINDINGS = [
   //Button 9
   [MACHINE_BTN_KEYBINDS[8], "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3", "Closed-HH"],
 ];
-const CHANGE_AUDIO_BINDING = "CHANGE_AUDIO_BINDING";
-const changeAudioBinding = (btnNum, newAudio) => {
-  return {
-    type: CHANGE_AUDIO_BINDING,
-    payload: {
-      btnNum: btnNum,
-      newAudio: newAudio,
+const audioBindingsSlice = createSlice({
+  name: 'audioBindings',
+  initialState: {
+    value: [...INITIAL_AUDIO_BINDINGS]
+  },
+  reducers: {
+    changeAudioBinding: (state, action) => {
+      state.value[action.payload.btnNum][1] = action.payload.audio[0];
+      state.value[action.payload.btnNum][2] = action.payload.audio[1];
     }
   }
-}
-const audioBindingReducer = (state = INITIAL_AUDIO_BINDINGS, action) => {
-  let stateCopy = [...state];
-  switch (action.type) {
-    case "CHANGE_AUDIO_BINDING":
-      stateCopy[action.payload.btnNum][1] = action.payload.audio[0];
-      stateCopy[action.payload.btnNum][2] = action.payload.audio[1];
-      return stateCopy;
-    default:
-      return state;
-  }
-}
+});
 
-export { changeAudioBinding };
-export default audioBindingReducer;
+
+
+export const { changeAudioBinding } = audioBindingsSlice.actions;
+export default audioBindingsSlice.reducer;

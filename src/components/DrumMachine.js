@@ -8,28 +8,12 @@ const DrumMachine = props => {
 
     <div id="drum-machine">
       <div id="machine-column-left">
-        <PowerBtn
-          powerStatus={props.appState.powerStatus}
-          togglePower={props.togglePower}
-          changeDisplayText={props.changeDisplayText}
-        />
-        <MachineSettings
-          changeVolume={props.changeVolume}
-          minVolume={props.appState.volume.minVolume}
-          maxVolume={props.appState.volume.maxVolume}
-        />
+        <PowerBtn />
+        <MachineSettings />
       </div>
       <div id="machine-column-right">
-        <MachineDisplay
-          displayText={props.appState.displayText}
-          changeDisplayText={props.changeDisplayText}
-        />
-        <DrumPadBtns
-          powerStatus={props.appState.powerStatus}
-          currentVolume={props.appState.volume.currentVolume}
-          audioBindings={props.appState.audioBindings}
-          changeDisplayText={props.changeDisplayText}
-        />
+        <MachineDisplay />
+        <DrumPadBtns />
       </div>
     </div>
 
