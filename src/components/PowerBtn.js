@@ -3,8 +3,8 @@ import { togglePower } from '../app/slices/powerSlice'
 import { changeDisplayText } from '../app/slices/displaySlice'
 
 const PowerBtn = props => {
-  const powerStatus = useSelector((state) => state.powerStatus.value);
   const dispatch = useDispatch();
+  const powerStatus = useSelector((state) => state.powerStatus.value);
 
 
   function handleClick(event) {

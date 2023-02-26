@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeVolume } from '../app/slices/volumeSlice';
 
 const MachineSettings = props => {
+  const dispatch = useDispatch();
   const minVolume = useSelector((state) => state.volume.value.minVolume);
   const maxVolume = useSelector((state) => state.volume.value.maxVolume);
-  const dispatch = useDispatch();
   const initialVolumeStep = 5;
   const volumeSteps = 10;
   const handleChange = (event) => {

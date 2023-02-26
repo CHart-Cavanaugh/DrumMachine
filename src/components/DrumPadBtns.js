@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeDisplayText } from "../app/slices/displaySlice";
 
 const DrumPadBtns = props => {
+  const dispatch = useDispatch();
   const powerStatus = useSelector((state) => state.powerStatus.value);
   const currentVolume = useSelector((state) => state.volume.value.currentVolume);
   const audioBindings = useSelector((state) => state.audioBindings.value);
-  const dispatch = useDispatch();
 
 
   function playAudio(btnKey) {
