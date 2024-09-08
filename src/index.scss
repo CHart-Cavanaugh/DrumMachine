@@ -52,7 +52,10 @@ body {
 }
 
 #drum-machine * {
+
+  -webkit-user-select: none;
   user-select: none;
+
 }
 
 #drum-machine {
