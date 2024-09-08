@@ -55,6 +55,9 @@ body {
 
   -webkit-user-select: none;
   user-select: none;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+
 
 }
 
