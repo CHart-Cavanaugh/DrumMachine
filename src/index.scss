@@ -61,7 +61,7 @@ body {
 #drum-machine {
 
   background: $machine-color;
-  border: 5px outset #111;
+  border: 2px solid #555;
   column-gap: 2rem;
   display: flex;
   flex-direction: column;
@@ -69,6 +69,7 @@ body {
   justify-content: space-between;
   padding: 1rem;
   width: 45rem;
+  border-radius: 10px;
 
 
 
@@ -222,19 +223,20 @@ body {
     justify-content: space-around;
     height: 100%;
     width: 100%;
+    padding: 1rem 0;
 
 
 
     #drum-pad-btns {
 
-      border-radius: 30px;
+      border-radius: 10px;
       border: 2px solid black;
       display: grid;
       gap: .25em;
       align-content: center;
       grid-template-columns: repeat(3, 1fr);
-      height: calc(90% - 2rem);
-      padding: .5em;
+      height: calc(90% - 3rem);
+      padding: 1rem;
       width: 100%;
 
 
@@ -242,7 +244,7 @@ body {
       button {
         border-radius: 10px;
         font-size: 2em;
-        height: 5.5rem;
+        height: 5rem;
       }
 
       button:focus {
@@ -304,7 +306,7 @@ body {
 
 
 
-@media (min-width: 600px) {
+@media (min-width: 720px) {
 
   #drum-machine {
 
